@@ -1,0 +1,27 @@
+{
+	"db": {
+		"url": "mongodb://localhost:27017/",
+		"name": "FacialPay",
+		"user": "",
+		"password": ""
+	},
+	"storage": {
+		"image_folder": "data/images/",
+		"faces": "data/faces/",
+		"last": "data/last"
+	},
+	"base_url": "http://0.0.0.0:5000",
+
+	"models": {
+		"face": {
+			"landmark": "models/landmark.dat",
+			"recognition": "models/facerec.dat"
+		}
+	},
+	"detection_params": {
+		"face": {
+			"threshold": 0.5,
+			"box_thickness": 3
+		}
+	}
+}

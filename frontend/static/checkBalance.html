@@ -1,0 +1,74 @@
+<html>
+<head>
+	<title>Balance Checker</title>
+	<style type="text/css">
+		body {
+			text-align: center;
+			font-family: 'Avenir';
+			font-weight: 300;
+		}
+		#balance {
+			font-size: 55pt;
+			height: 100px;
+			line-height: 100px;
+			margin-bottom: 80px;
+		}
+		input {
+			width: 300px;
+			height: 60px;
+			border-radius: 10px;
+			border: 2px solid #d9d9d9;
+			background: #fff;
+			padding: 7px;
+			
+		}
+		button {
+			display: block;
+			margin: auto;
+			margin-top: 14px;
+			width: 600px;
+			margin-top: 20px;
+			height: 60px;
+			background: #d9d9d9;
+			color: #000;
+			border: 0;
+			font-size: 15pt;
+		}
+	</style>
+	<script type="text/javascript">
+		function getBalance() {
+		    var http = new XMLHttpRequest();
+			var url = "https://localhost:3000/user/balance";
+
+			var params = "username=" + encodeURIComponent(document.getElementById('username').value) + "&password=" + encodeURIComponent(document.getElementById('password').value);
+			http.open("POST", url, true);
+
+			//Send the proper header information along with the request
+			http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+			http.onreadystatechange = function() {//Call a function when the state changes.
+			    if(http.readyState == 4 && http.status == 200) {
+
+			        console.log(http.responseText);
+			    	data = JSON.parse(http.responseText)
+			    	if (data.success) {
+			    		document.getElementById("balance").innerHTML = "$" + data.balance;
+			    	}
+
+			    }
+
+			}
+
+
+			http.send(params);
+
+		}
+	</script>
+</head>
+<body>
+	<span>Balance</span>
+	<div id="balance">&nbsp;</div>
+	<input type="text" id="username" placeholder="Username" />	
+	<input type="password" id="password" placeholder="Password" />
+	<button onclick="getBalance()">Get Balance</button>	
+</body>

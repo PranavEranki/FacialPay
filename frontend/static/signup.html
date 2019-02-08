@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+
+  <script type="text/javascript" src="webcam.min.js"></script>
+  <style type="text/css">
+    #my_camera {
+      display: none;
+    }
+  </style>
+
+  <title>FacialPay - Pay with your face</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css'>
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300'>
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:400,700,300'>
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+
+      <link rel="stylesheet" href="css/style.css">
+
+
+</head>
+
+<body>
+    <script language="JavaScript">
+    function take_snapshot() {
+      // take snapshot and get image data
+      Webcam.snap( function(data_uri) {
+        httpGetAsync(data_uri);
+      } );
+    }
+
+
+    function httpGetAsync(image) {
+      console.log("HERE");
+      var http = new XMLHttpRequest();
+      var url = "https://localhost:3000/user/signup_base64";
+
+      var params = "username=" + encodeURIComponent(document.getElementById('username').value) + "&password=" + encodeURIComponent(document.getElementById('password').value) + "&name=" + encodeURIComponent(document.getElementById('name').value) + "&starting_balance=" + encodeURIComponent(document.getElementById('starting_balance').value) + "&image=" + encodeURIComponent(image) ;
+      http.open("POST", url, true);
+
+      //Send the proper header information along with the request
+      http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+      http.onreadystatechange = function() {//Call a function when the state changes.
+          if(http.readyState == 4 && http.status == 200) {
+
+            data = JSON.parse(http.responseText)
+            if (!data.success) {
+              alert(data.error);
+            } else {
+              alert("Successfully registered!")
+            }
+          }
+
+        }
+
+      http.send(params);
+
+    }
+  </script>
+
+  <div id="my_camera"></div>
+  <script language="JavaScript">
+    Webcam.set({
+      width: 640,
+      height: 480,
+      image_format: 'jpeg',
+      jpeg_quality: 90
+    });
+    Webcam.attach( '#my_camera' );
+  </script>
+
+  <div class="signup__container">
+  <div class="container__child signup__thumbnail">
+    <div class="thumbnail__logo">
+
+      <h1 class="logo__text">FacialPay New User Sign-up</h1>
+    </div>
+    <div class="thumbnail__content text-center">
+      <h1 class="heading--primary">Next Gen Banking.</h1>
+      <h2 class="heading--secondary">Moving towards <s>Cash</s> <s>Card</s> Face based society!</h2>
+    </div>
+    <div class="thumbnail__links">
+      <ul class="list-inline m-b-0 text-center">
+      </ul>
+    </div>
+    <div class="signup__overlay"></div>
+  </div>
+  <div class="container__child signup__form">
+    <form action="#">
+      <div class="form-group">
+        <label for="username">Customer Name</label>
+        <input class="form-control" type="text" name="username" id="name" placeholder="e.g. Motasim Bir Rahman" required />
+      </div>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input class="form-control" type="text" name="username" id="username" placeholder="e.g. motasimrahman" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input class="form-control" type="password" name="password" id="password" placeholder="********" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Starting Balance</label>
+        <input class="form-control" type="text" name="starting_balance" id="starting_balance" placeholder="Starting Balance" required />
+      </div>
+      <div class="form-group">
+      <label>* Please look at the camera</label>
+      </div>
+
+
+      <div class="m-t-lg">
+        <ul class="list-inline">
+          <li>
+            <input class="btn btn--form" type="button" onClick="take_snapshot()" value="Register" />
+          </li>
+          <li>
+
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+</body>
+
+</html>

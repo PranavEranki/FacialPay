@@ -1,0 +1,352 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>FacialPay - Pay with your face.</title>
+	<link rel="stylesheet" href="bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+	<style type="text/css">
+		body { font-family: Helvetica, sans-serif; }
+		h2, h3 { margin-top:0; }
+		form { margin-top: 15px; }
+		form > input { margin-right: 15px; }
+		#my_camera {display: none;}
+	</style>
+</head>
+<body>
+
+	<div id="my_camera"></div>
+
+	<!-- First, include the Webcam.js JavaScript Library -->
+	<script type="text/javascript" src="../webcam.min.js"></script>
+
+	<!-- Configure a few settings and attach camera -->
+	<script language="JavaScript">
+		Webcam.set({
+			width: 640,
+			height: 480,
+			image_format: 'jpeg',
+			jpeg_quality: 90
+		});
+		Webcam.attach( '#my_camera' );
+	</script>
+
+	<style type="text/css">
+		body {
+			text-align: center;
+			margin:auto;
+		}
+		.liveImage {
+			border-radius: 15px;
+		}
+		.tick {
+			width: 400px;
+			height: auto;
+			position: relative;
+			top: 50%;
+			left: 50%;
+			margin-left: -200px;
+			margin-top: -150px;
+		}
+		.page {
+			width: 100%;
+			position: fixed;
+			top: 0;
+			left: 0;
+			height: 100%;
+			margin: 0;
+			transition: left 0.8s;
+
+		}
+		.page1 {
+			background: white;
+		}
+		.page2 {
+			background: #F8E71C;
+			left: 100%;
+		}
+		.page3 {
+			background: #FFFFFF;
+			left: 200%;
+			text-align: left;
+		}
+
+		.container {
+        display: grid;
+    grid-gap: 20px;
+
+        background-color: #fff;
+        color: #444;
+        justify-content: center;
+        align-content: end;
+    }
+
+    .resultsContainer {
+    	position: relative;
+    	top: 10%;
+    	margin-left: -505px;
+    	left: 50%;
+    }
+
+    .box {
+        background-color: #444;
+        color: #fff;
+        border-radius: 5px;
+        padding: 20px;
+        font-size: 150%;
+
+    }
+
+  .keypad {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .amount_button {
+        grid-column: 1 ;
+        grid-row: 2;
+    }
+    .gaze_logo {
+        grid-column: 2 ;
+        grid-row: 1 ;
+    }
+    .pay_button {
+        grid-column: 2;
+        grid-row: 2;
+    }
+    .amountBox::placeholder {
+    	color: #aaa;
+    }
+
+    .amountBox {
+    	width: 350px;
+    	height: 80px;
+    	background: #ffffff;
+    	border: 2px solid #9B9B9B;
+		border-radius: 12px;
+		padding: 8px;
+		text-align: center;
+    	font-family: 'Avenir';
+    	font-weight: 'light';
+    	font-size: 15pt;
+    }
+
+    .amountDiv {
+    	float: left;
+    }
+    .btnDiv {
+    	float:left;
+    }
+
+    .pay-btn {
+    	background: #9b9b9b;
+    	border: 0;
+    	border-radius: 0;
+    	height: 80px;
+    	width: 350px;
+    	margin-left: 12px;
+    	font-size: 15pt;
+    	font-family: 'Avenir';
+    	font-weight: 'light';
+    	color: black;
+    }
+
+    .clear {
+    	clear: both;
+    }
+
+    .logo {
+    	width: 300px;
+    	margin-bottom: 20px;
+    }
+    .mainDiv {
+    	text-align: left;
+    	position: relative;
+    	top: 50%;
+    	left: 50%;
+    	margin-left: -356px;
+    	margin-top: -91px;
+    }
+
+    .resultsPane {
+    	float: left;
+    	width: 640px;
+    	margin-right: 50px;
+    	font-size: 15pt;
+    }
+
+    .resultsWritingPane {
+    	float: left;
+    	width: 320px;
+    	font-family: 'Avenir';
+    	font-weight: 'light';
+    	text-align: left;
+    	margin-top: 150px;
+    }
+
+    .resultsWritingPane h1 {
+    	font-size: 45pt !important;
+    	font-weight: 300 !important;
+    }
+
+
+
+
+	</style>
+
+	<!-- A button for taking snaps -->
+	<div class="page page1" id="page1">
+		<div class="mainDiv">
+		<img src="logo.png" class="logo"/>
+		<br />
+		<div class="controls">
+		<div class="amountDiv">
+		<input type="number" step="0.01" placeholder="Amount" id="amount" class="amountBox" />
+		</div>
+		<div class="btnDiv">
+		<button type="button" class="btn btn-secondary pay-btn" onClick="take_snapshot(true)">Pay with FacialPay	</button>
+		</div>
+		<div class="clear"></div>
+		</div>
+		</div>
+
+		<div class="container">
+		  <div class="row align-items-start">
+		    <div class="col">
+
+		    </div>
+		    <div class="col">
+		    </div>
+
+		  </div>
+
+		  <div class="row align-items-end">
+		    <div class="col">
+
+		    </div>
+
+		    <div class="col">
+
+		    </div>
+		  </div>
+		</div>
+
+
+	</div>
+
+	<br />
+	<div class="page page2" id="page2">
+		<div class="resultsContainer">
+			<div class="resultsPane">
+				<div id="results">
+					<img src="blank.jpg" class="liveImage" />
+				</div>
+			</div>
+			<div class="resultsWritingPane">
+				<h1>Waiting for confirmation</h1>
+				<br />
+				Customer Name<br />
+				<b id="nameField"></b>
+				<br /><br />
+				Amount
+				<h1 id="amountField"></h1>
+
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+
+	<div class="page page3" id="page3">
+		<img src="tick.gif" class="tick" id="tick" />
+	</div>
+
+	<!-- Code to handle taking the snapshot and displaying it locally -->
+	<script language="JavaScript">
+
+		function httpGetAsync(image, callback) {
+		    var http = new XMLHttpRequest();
+			var url = "https://localhost:3000/pay/" + document.getElementById("amount").value + "?access_token=5a5aaf46cb3c82f79afb7245";
+			document.getElementById("amountField").innerHTML = "CAD " + document.getElementById("amount").value;
+
+			var params = "image=" + encodeURIComponent(image);
+			http.open("POST", url, true);
+
+			//Send the proper header information along with the request
+			http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+			http.onreadystatechange = function() {//Call a function when the state changes.
+			    if(http.readyState == 4 && http.status == 200) {
+			        // console.log(http.responseText);
+			    	data = JSON.parse(http.responseText)
+
+
+
+
+
+					newImg = image;
+					if(data.image) {
+						newImg = data.image;
+					}
+
+					document.getElementById('results').innerHTML = '<img class="liveImage" src="'+newImg+'"/>';
+
+					if (!data.success) {
+			    		take_snapshot(false);
+			    	} else {
+			    		names = ""
+			    		for(var count = 0; count < data.names.length; count++) {
+			    			if (count > 0) {
+			    				names += ", "
+			    			}
+			    			names += data.names[count]
+			    		}
+			    		document.getElementById("nameField").innerHTML = names
+
+			    		setTimeout(function(){
+			    			document.getElementById("page1").style.left = "-200%";
+							document.getElementById("page2").style.left = "-100%";
+							document.getElementById("page3").style.left = "0";
+
+			    			document.getElementById("amount").value = "";
+			    			document.getElementById("nameField").innerHTML = "";
+			    			document.getElementById("amountField").innerHTML = "";
+			    		}, 2300)
+
+
+						setTimeout(function() {
+							document.getElementById("tick").src = "tick.gif?x=" + Date.now()
+							document.getElementById("page1").style.left = "0";
+							document.getElementById("page2").style.left = "100%";
+							document.getElementById("page3").style.left = "200%";
+
+			    			document.getElementById("amount").value = "";
+			    			document.getElementById("nameField").innerHTML = "";
+			    			document.getElementById("amountFieldd").innerHTML = "";
+						}, 4600)
+			    	}
+			    }
+
+
+
+			}
+			http.send(params);
+		}
+		function take_snapshot(animate) {
+			if(animate) {
+				document.getElementById("page1").style.left = "-100%";
+				document.getElementById("page2").style.left = "0";
+				document.getElementById("page3").style.left = "100%";
+			}
+			// take snapshot and get image data
+			Webcam.snap( function(data_uri) {
+
+				httpGetAsync(data_uri);
+				// display results in page
+				// document.getElementById('results').innerHTML =
+				// 	'<h2>Here is your image:</h2>' +
+				// 	'<img src="'+data_uri+'"/>';
+			} );
+		}
+	</script>
+
+</body>
+</html>
