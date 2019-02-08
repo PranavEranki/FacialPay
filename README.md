@@ -1,3 +1,5 @@
+![](frontend/static/facialpay-logo.png)
+
 # Summary
 FacialPay is a face recognition based payment system for point of sale terminals. The goal is to eventually replace credit cards with biometrics (like face, retinal and/or fingerprint scan).
 
